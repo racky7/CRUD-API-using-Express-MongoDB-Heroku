@@ -4,8 +4,8 @@ const {Book, validateBook} = require('../models/books')
 
 //POST : CREATE A NEW BOOK
 router.post('/', async (req,res)=>{
-  const message = await validateBook(req.body);
-  if(message) res.status(400).send(message)
+  const error = await validateBook(req.body);
+  if(error.message) res.status(400).send(error.message)
   book = new Book({
     name:req.body.bookName,
     author:{
