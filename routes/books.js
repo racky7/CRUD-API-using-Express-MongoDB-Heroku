@@ -32,14 +32,25 @@ router.get("/",(req,res)=>{
 
 // GET The Book by ID
 
-router.get("/:bookId", (req,res)=>{
-  Book.findById(req.params.bookId).then(book=>{
-    if(book) res.send(book);
-    res.status(404).send("Book not found")
-  }).catch((error)=>{
-    res.status(500).send(error.message);
-  })
+//method 1
+
+// router.get("/:bookId", (req,res)=>{
+//   Book.findById(req.params.bookId).then(book=>{
+//     if(book) res.send(book);
+//     res.status(404).send("Book not found")
+//   }).catch((error)=>{
+//     res.status(500).send(error.message);
+//   })
+// })
+
+//method 2 - with async await - easy one
+
+router.get("/:bookId", async (req,res)=>{
+  const book = await Book.findById(req.params.bookId)
+  if(!book) res.status(404).send("Book not found")
+  res.send(book)
 })
+
 
 
 module.exports = router;
