@@ -22,4 +22,24 @@ router.post('/', async (req,res)=>{
   })
 })
 
+//GET All boos
+
+router.get("/",(req,res)=>{
+  Book.find().then(books => res.send(books)).catch((error)=>{
+    res.status(500).send("Something went wrong")
+  })
+})
+
+// GET The Book by ID
+
+router.get("/:bookId", (req,res)=>{
+  Book.findById(req.params.bookId).then(book=>{
+    if(book) res.send(book);
+    res.status(404).send("Book not found")
+  }).catch((error)=>{
+    res.status(500).send(error.message);
+  })
+})
+
+
 module.exports = router;
