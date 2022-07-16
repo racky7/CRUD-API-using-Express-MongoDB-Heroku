@@ -51,6 +51,23 @@ router.get("/:bookId", async (req,res)=>{
   res.send(book)
 })
 
+// UPDATE BOOK BASED on Id
+
+router.put('/:bookId', async (req,res)=>{
+  const updatedBook = await Book.findByIdAndUpdate(req.params.bookId,{
+    name:req.body.bookName,
+    author:{
+      name:req.body.authorName,
+      age:req.body.authorAge,
+    },
+    genre:req.body.genre
+  },
+  {new:true}                              );
+
+  if(!updatedBook) res.status(404).send('Book not found')
+  res.send(updatedBook)
+})
+
 
 
 module.exports = router;
